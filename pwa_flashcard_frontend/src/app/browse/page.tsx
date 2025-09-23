@@ -7,7 +7,7 @@ import { api } from "@/lib/api";
 export default function BrowsePage() {
   const [q, setQ] = useState("");
   const [direction, setDirection] = useState<"en-id" | "id-en">("en-id");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(""); // categoryId
   const [type, setType] = useState("");
   const [items, setItems] = useState<Array<{ id: string; word: string; meaning: string; type?: string; category?: string }>>([]);
   const [categories, setCategories] = useState<Array<{ id: string; name: string }>>([]);
@@ -30,10 +30,7 @@ export default function BrowsePage() {
   }, [q, category, type, direction]);
 
   useEffect(() => {
-    // initial search on mount and when key filters change
-    void (async () => {
-      await search();
-    })();
+    void (async () => { await search(); })();
   }, [search]);
 
   return (
@@ -68,7 +65,7 @@ export default function BrowsePage() {
                 <span className="label">Category</span>
                 <select className="input" value={category} onChange={e=>setCategory(e.target.value)}>
                   <option value="">All</option>
-                  {categories.map((c)=> <option key={c.id} value={c.name}>{c.name}</option>)}
+                  {categories.map((c)=> <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
               <div>

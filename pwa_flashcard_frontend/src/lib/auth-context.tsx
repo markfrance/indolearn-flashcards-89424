@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "./api";
 import { usePathname, useRouter } from "next/navigation";
+import { getSupabaseClient } from "./supabaseClient";
 
 type User = { id: string; email: string; name?: string };
 
@@ -38,10 +39,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (res.data) setUser(res.data);
       setLoading(false);
     })();
-    return () => { mounted = false; };
+
+    // Subscribe to Supabase auth changes to keep UI in sync across tabs
+    const supabase = (() => {
+      try { return getSupabaseClient(); } catch { return null; }
+    })();
+    const { data: subscription } = supabase?.auth.onAuthStateChange(async () => {
+      const me = await api.me();
+      if (me.data) setUser(me.data);
+      else setUser(null);
+    }) || { data: { subscription: null }, error: null } as any;
+
+    return () => {
+      mounted = false;
+      if (subscription?.subscription) {
+        subscription.subscription.unsubscribe();
+      }
+    };
   }, []);
 
-  // simple route guarding: public routes list
   const publicRoutes = useMemo(() => ["/", "/login", "/register", "/privacy", "/terms"], []);
   useEffect(() => {
     if (!loading) {
@@ -65,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (name: string, email: string, password: string) => {
     const reg = await api.register({ name, email, password });
     if (reg.error) return reg.error;
+    // Optional immediate sign-in for smooth UX
     const log = await api.login({ email, password });
     if (log.error) return log.error;
     const me = await api.me();

@@ -2,15 +2,21 @@
 
 Progressive Web App built with Next.js (App Router) following the Ocean Professional classic theme.
 
-## Configuration
+## Configuration (Supabase-only)
 
-Copy `.env.example` to `.env.local` and set the backend base URL:
+This app connects directly to Supabase for authentication and data. Create `.env.local` from `.env.example` and set:
 
 ```
-NEXT_PUBLIC_API_BASE=http://localhost:4000
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-The frontend expects an Express backend exposing the endpoints found in `../backend/interfaces/openapi.json`.
+- NEXT_PUBLIC_SITE_URL is used for auth email redirect. In production, set it to your deployed site origin.
+
+No local Express or Postgres server is required. The prior backend and database directories are decommissioned.
+
+See the Supabase setup guide in `assets/supabase.md` at the repository root for table schema and RLS notes.
 
 ## Development
 
@@ -37,12 +43,12 @@ Note: Add app icons in `public/icons/` as PNG files:
 
 ## Features
 
-- Authentication (login/register/logout)
+- Authentication (login/register/logout) via Supabase Auth
 - Dashboard with progress KPIs
-- Review with intelligent multiple-choice and spaced repetition prompts (Easy/Good/Hard)
+- Review with intelligent multiple-choice
 - Browse words with category and type filters
-- Statistics dashboard (category accuracy and activity heatmap)
-- Settings/profile
+- Statistics dashboard (category accuracy and activity heatmap from client logs)
+- Settings/profile (display name stored in Supabase user metadata)
 
 ## Theming
 

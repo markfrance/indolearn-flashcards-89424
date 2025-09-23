@@ -11,7 +11,7 @@ type Quiz = { id: string; questions: Question[] };
 // PUBLIC_INTERFACE
 export default function ReviewPage() {
   const [direction, setDirection] = useState<"en-id" | "id-en">("en-id");
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>(""); // categoryId
   const [type, setType] = useState<string>("");
   const [size, setSize] = useState(10);
   const [loading, setLoading] = useState(false);
@@ -78,15 +78,13 @@ export default function ReviewPage() {
 
   // Spaced repetition grading UI
   const grade = (difficulty: "easy" | "good" | "hard") => {
-    // We map difficulty to auto-select correct or distractor to influence backend schedule via submitQuiz details.
     if (!current) return;
     const choice =
       difficulty === "easy"
         ? current.answer
         : difficulty === "good"
           ? answers[current.id] || current.choices[0]
-          : // hard: pick a random wrong
-            (current.choices.find((c) => c !== current.answer) || current.choices[0]);
+          : (current.choices.find((c) => c !== current.answer) || current.choices[0]);
     selectChoice(current, choice);
     next();
   };
@@ -128,7 +126,7 @@ export default function ReviewPage() {
                 <span className="label">Category</span>
                 <select className="input" value={category} onChange={e=>setCategory(e.target.value)}>
                   <option value="">All</option>
-                  {categories.map((c)=> <option key={c.id} value={c.name}>{c.name}</option>)}
+                  {categories.map((c)=> <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
               <div>
