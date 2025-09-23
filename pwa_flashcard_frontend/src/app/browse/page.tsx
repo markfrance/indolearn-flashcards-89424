@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api } from "@/lib/api";
 
 // PUBLIC_INTERFACE
@@ -22,19 +22,19 @@ export default function BrowsePage() {
     return () => { mounted = false; };
   }, []);
 
-  const search = async () => {
+  const search = useCallback(async () => {
     setLoading(true);
     const res = await api.flashcards({ q, category: category || undefined, type: type || undefined, direction });
     if (res.data) setItems(res.data);
     setLoading(false);
-  };
+  }, [q, category, type, direction]);
 
   useEffect(() => {
     // initial search on mount and when key filters change
     void (async () => {
       await search();
     })();
-  }, [direction, category, type, search]);
+  }, [search]);
 
   return (
     <section className="mt-6 grid gap-4">

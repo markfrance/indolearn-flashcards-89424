@@ -16,10 +16,12 @@ export default function LoginPage() {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
-    const err = await login(email, password);
+    const err = await login(email.trim(), password);
     if (err) setError(err);
     setSubmitting(false);
   };
+
+  const disabled = submitting || !email.trim() || !password;
 
   return (
     <section className="mt-6 grid gap-4">
@@ -40,7 +42,7 @@ export default function LoginPage() {
 
             {error && <p role="alert" className="text-sm" style={{color:"var(--color-error)"}}>{error}</p>}
 
-            <button className="btn btn-primary" disabled={submitting} type="submit">
+            <button className="btn btn-primary" disabled={disabled} type="submit">
               {submitting ? "Signing in..." : "Sign in"}
             </button>
           </form>

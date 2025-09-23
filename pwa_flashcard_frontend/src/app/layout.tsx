@@ -3,6 +3,7 @@ import "./globals.css";
 import Link from "next/link";
 import Script from "next/script";
 import { AuthProvider } from "@/lib/auth-context";
+import ClientHeader from "./ClientHeader";
 
 export const metadata: Metadata = {
   title: "IndoLearn Flashcards",
@@ -29,23 +30,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <AuthProvider>
-          <header className="appbar">
-            <div className="appbar-content container">
-              <div className="brand">
-                <span aria-hidden="true" style={{width:10,height:10,background:'white',borderRadius:2,opacity:.9}} />
-                <Link href="/" className="text-white" aria-label="IndoLearn Home">
-                  IndoLearn
-                </Link>
-              </div>
-              <nav className="nav" aria-label="Primary">
-                <Link href="/dashboard">Dashboard</Link>
-                <Link href="/review">Review</Link>
-                <Link href="/browse">Browse</Link>
-                <Link href="/stats">Stats</Link>
-                <Link href="/settings">Settings</Link>
-              </nav>
-            </div>
-          </header>
+          <ClientHeader />
           <main className="container" role="main">
             {children}
           </main>

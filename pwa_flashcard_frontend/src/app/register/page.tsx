@@ -12,15 +12,23 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
-    const err = await register(name, email, password);
-    if (err) setError(err);
+    setSuccess(null);
+    const err = await register(name.trim(), email.trim(), password);
+    if (err) {
+      setError(err);
+    } else {
+      setSuccess("Account created! Redirecting…");
+    }
     setSubmitting(false);
   };
+
+  const disabled = submitting || !name.trim() || !email.trim() || !password;
 
   return (
     <section className="mt-6 grid gap-4">
@@ -44,8 +52,9 @@ export default function RegisterPage() {
             </div>
 
             {error && <p role="alert" className="text-sm" style={{color:"var(--color-error)"}}>{error}</p>}
+            {success && <p className="text-sm" style={{color:"var(--color-success)"}}>{success}</p>}
 
-            <button className="btn btn-primary" disabled={submitting} type="submit">
+            <button className="btn btn-primary" disabled={disabled} type="submit">
               {submitting ? "Creating..." : "Create account"}
             </button>
           </form>
