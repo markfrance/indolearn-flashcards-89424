@@ -4,7 +4,7 @@ Progressive Web App built with Next.js (App Router) following the Ocean Professi
 
 ## Configuration (Supabase-only)
 
-This app connects directly to Supabase for authentication and data. Create `.env.local` from `.env.example` and set:
+This app connects directly to Supabase for authentication and data. Copy `.env.example` to `.env.local` and set:
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -13,6 +13,12 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 - NEXT_PUBLIC_SITE_URL is used for auth email redirect. In production, set it to your deployed site origin.
+- If these variables are not provided, the app will not start and `src/lib/supabaseClient.ts` will throw a clear configuration error.
+
+Important:
+- Do NOT start the local Express backend (`indolearn-flashcards-89426/backend`) — it is DEPRECATED.
+- Do NOT start the local PostgreSQL database container (`indolearn-flashcards-89425/flashcards_database`) for this app — it is DEPRECATED for the Supabase flow.
+- See root `assets/supabase.md` for required tables and RLS configuration when using Supabase.
 
 No local Express or Postgres server is required. The prior backend and database directories are decommissioned.
 
