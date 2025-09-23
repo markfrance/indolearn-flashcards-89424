@@ -2,6 +2,7 @@
 
 import { getSupabaseClient } from "./supabaseClient";
 import { shuffle } from "./utils";
+import { getURL } from "./getURL";
 
 /**
  * PUBLIC_INTERFACE
@@ -101,7 +102,7 @@ export const api = {
         password: body.password,
         options: {
           data: body.name ? { name: body.name } : undefined,
-          emailRedirectTo: `${getSiteUrl()}/auth/callback`,
+          emailRedirectTo: `${getURL()}auth/callback`,
         },
       });
       if (error) return fail(error.message, 400);
