@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Offline - IndoLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --primary: #1E3A8A;
+        --text: #111827;
+        --bg: #F3F4F6;
+        --surface: #FFFFFF;
+      }
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+      }
+      .card {
+        background: var(--surface);
+        border-radius: 12px;
+        padding: 24px;
+        width: min(500px, 92vw);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        text-align: center;
+      }
+      h1 { color: var(--primary); font-weight: 700; margin: 0 0 8px; }
+      p { opacity: .8; margin: 0 0 16px; }
+      a {
+        color: white;
+        background: var(--primary);
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>Offline</h1>
+      <p>You seem to be offline. Please check your connection.</p>
+      <a href="/">Try Again</a>
+    </main>
+  </body>
+</html>

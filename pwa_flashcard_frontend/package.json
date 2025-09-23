@@ -1,7 +1,8 @@
 {
-  "name": "nextjs",
+  "name": "indolearn-flashcards-pwa",
   "version": "0.1.0",
   "private": true,
+  "description": "IndoLearn PWA — Indonesian flashcards with intelligent MCQ and spaced repetition.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
